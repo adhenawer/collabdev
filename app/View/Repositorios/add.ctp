@@ -1,0 +1,15 @@
+<div class="repositorios form">
+<?php echo $this->Form->create('Repositorio'); ?>
+	<fieldset>
+		<legend><?php echo __('Add Repositorio'); ?></legend>
+	<?php
+		echo $this->Form->input('nome');
+		echo $this->Form->input('descricao');
+		echo $this->Form->input('linguagem');
+		echo $this->Form->input('usuario_id');
+		echo $this->Form->input('tipo_repositorio_id');
+	?>
+	</fieldset>
+<?php echo $this->Form->end(__('Submit')); ?>
+</div>
+<?php echo $this->Element('menu'); ?>

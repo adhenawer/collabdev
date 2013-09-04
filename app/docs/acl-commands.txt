@@ -1,0 +1,8 @@
+Entrar no diretório: collabdev/lib/Cake/Console
+
+Executar comandos:
+sh cake acl create aco root controllers -app ../../../app/
+sh cake AclExtras.AclExtras aco_sync -app ../../../app/
+
+http request:
+http://127.0.0.1/collabdev/acl/initDB
