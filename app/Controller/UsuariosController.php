@@ -85,6 +85,16 @@ class UsuariosController extends AppController {
     }
 
 /**
+ * conta method
+ *
+ * @return void
+ */
+    public function conta(){
+       $this->edit($this->Session->read('Auth.User.id'));
+       $this->render('edit');
+    }
+
+/**
  * delete method
  *
  * @throws NotFoundException
@@ -120,5 +130,21 @@ class UsuariosController extends AppController {
 
     public function logout() {
         $this->redirect($this->Auth->logout());
+    }
+
+    public function alterarSenha(){
+        if ($this->request->is('post')) {
+            $this->Usuario->id = $this->Session->read('Auth.User.id');
+            $this->request->data['Usuario']['id'] = $this->Usuario->id;
+            if($this->Usuario->save($this->data)){
+                $this->Session->setFlash(__('Senha alterada com sucesso.'), 'default', array('class' => 'notification success'));
+            }else
+                $this->Session->setFlash(__('Problemas ao alterar senha, verifique abaixo.'), 'default', array('class' => 'notification form-error'));
+        }
+    }
+
+    public function beforeFilter(){
+        parent::beforeFilter();
+        $this->Auth->allow('dashboard', 'conta', 'logout', 'alterarSenha');
     }
 }

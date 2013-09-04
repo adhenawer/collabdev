@@ -23,13 +23,11 @@ class AclController extends AppController {
         //Gerenciador
         $group->id = 2;
         $this->Acl->deny($group, 'controllers');
-        $this->Acl->allow($group, 'controllers/Usuarios/dashboard');
         $this->Acl->allow($group, 'controllers/Usuarios/index');
         $this->Acl->allow($group, 'controllers/Usuarios/add');
         $this->Acl->allow($group, 'controllers/Usuarios/edit');
         $this->Acl->allow($group, 'controllers/Usuarios/view');
         $this->Acl->allow($group, 'controllers/Usuarios/delete');
-        $this->Acl->allow($group, 'controllers/Usuarios/logout');
 
         $this->Acl->allow($group, 'controllers/Repositorios/index');
         $this->Acl->allow($group, 'controllers/Repositorios/add');
@@ -52,9 +50,7 @@ class AclController extends AppController {
         //Colaborador
         $group->id = 3;
         $this->Acl->deny($group, 'controllers');
-        $this->Acl->allow($group, 'controllers/Usuarios/dashboard');
         $this->Acl->allow($group, 'controllers/Usuarios/edit');
-        $this->Acl->allow($group, 'controllers/Usuarios/logout');
 
         $this->Acl->allow($group, 'controllers/Tarefas/index');
         //$this->Acl->allow($group, 'controllers/Tarefas/add');

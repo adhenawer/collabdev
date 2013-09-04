@@ -53,7 +53,8 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
                     <span><?php echo $this->Session->read('Auth.User.login').' - '?></span>
                         <?php echo $this->Session->read('Auth.User.Grupo.nome')?>
                     <?php
-                        echo $this->Html->link(__('Minha conta'), array('controller' => 'usuarios', 'action' => 'edit', $this->Session->read('Auth.User.id')));
+                        echo $this->Html->link(__('Minha conta'), array('controller' => 'usuarios', 'action' => 'conta'));
+                        echo $this->Html->link(__('Alterar senha'), array('controller' => 'usuarios', 'action' => 'alterarSenha'));
                         echo $this->Html->link(__('Sair'), array('controller' => 'usuarios', 'action' => 'logout'));
                     ?>
                 </div>

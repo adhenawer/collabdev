@@ -92,6 +92,52 @@ class Usuario extends AppModel {
                 //'on' => 'create', // Limit validation to 'create' or 'update' operations
             ),
         ),
+        'password' => array(
+            'notempty' => array(
+                'rule' => array('notempty'),
+                'message' => 'Campo de preenchimento obrigatório.',
+                //'allowEmpty' => false,
+                //'required' => false,
+                //'last' => false, // Stop validation after this rule
+                //'on' => 'create', // Limit validation to 'create' or 'update' operations
+            )
+        ),
+        'passwordAgain' => array(
+            'notempty' => array(
+                'rule' => array('notempty'),
+                'message' => 'Campo de preenchimento obrigatório.',
+                //'allowEmpty' => false,
+                //'required' => false,
+                //'last' => false, // Stop validation after this rule
+                //'on' => 'create', // Limit validation to 'create' or 'update' operations
+            ),
+            'checkPassword' => array(
+                'rule' => array('checkPassword'),
+                'message' => 'Senhas diferentes.',
+                //'allowEmpty' => false,
+                //'required' => false,
+                //'last' => false, // Stop validation after this rule
+                //'on' => 'create', // Limit validation to 'create' or 'update' operations
+            )
+        ),
+        'oldPassword' => array(
+            'notempty' => array(
+                'rule' => array('notempty'),
+                'message' => 'Campo de preenchimento obrigatório.',
+                //'allowEmpty' => false,
+                //'required' => false,
+                //'last' => false, // Stop validation after this rule
+                //'on' => 'create', // Limit validation to 'create' or 'update' operations
+            ),
+            'OldPassword' => array(
+                'rule' => array('OldPassword'),
+                'message' => 'Senha inválida.',
+                //'allowEmpty' => false,
+                //'required' => false,
+                //'last' => false, // Stop validation after this rule
+                //'on' => 'create', // Limit validation to 'create' or 'update' operations
+            )
+        ),
     );
 
     //The Associations below have been created with all possible keys, those that are not needed can be removed
@@ -183,5 +229,22 @@ class Usuario extends AppModel {
 
     public function bindNode($user) {
         return array('model' => 'Grupo', 'foreign_key' => $user['Usuario']['grupo_id']);
+    }
+
+    public function OldPassword($check){
+        $oldPass = $this->find('count', array(
+            'conditions' => array('Usuario.id' => $this->data['Usuario']['id'], 'Usuario.senha' => AuthComponent::password($check['oldPassword']))
+        ));
+        if($oldPass)
+            return true;
+        else
+            return false;
+    }
+
+    public function checkPassword($check){
+        if($check['passwordAgain'] == $this->data['Usuario']['senha'])
+            return true;
+        else
+            return false;
     }
 }
