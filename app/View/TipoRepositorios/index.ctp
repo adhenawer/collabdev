@@ -1,7 +1,7 @@
 <div class="actions">
     <h3><?php echo __('Principal'); ?></h3>
     <ul>
-        <li><?php echo $this->Html->link(__('Novo Tipo de Repositório'), array('controller' => 'tipo_repositorios', 'action' => 'add')); ?> </li>
+        <li><?php echo $this->Html->link(__('Criar Tipo de Repositório'), array('controller' => 'tipo_repositorios', 'action' => 'add')); ?> </li>
     </ul>
 </div>
 <div class="tipoRepositorios index">

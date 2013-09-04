@@ -26,7 +26,7 @@ class RepositoriosController extends AppController {
  */
     public function view($id = null) {
         if (!$this->Repositorio->exists($id)) {
-            throw new NotFoundException(__('Invalid repositorio'));
+            throw new NotFoundException(__('Repositório inválido'));
         }
         $options = array('conditions' => array('Repositorio.' . $this->Repositorio->primaryKey => $id));
         $this->set('repositorio', $this->Repositorio->find('first', $options));
@@ -41,10 +41,10 @@ class RepositoriosController extends AppController {
         if ($this->request->is('post')) {
             $this->Repositorio->create();
             if ($this->Repositorio->save($this->request->data)) {
-                $this->Session->setFlash(__('The repositorio has been saved.'));
+                $this->Session->setFlash(__('Registro salvo com sucesso.'), 'default', array('class' => 'notification success'));
                 return $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__('The repositorio could not be saved. Please, try again.'));
+                $this->Session->setFlash(__('Problemas ao salvar registro. Por favor, tente novamente.'));
             }
         }
         $usuarios = $this->Repositorio->Usuario->find('list');
@@ -61,14 +61,14 @@ class RepositoriosController extends AppController {
  */
     public function edit($id = null) {
         if (!$this->Repositorio->exists($id)) {
-            throw new NotFoundException(__('Invalid repositorio'));
+            throw new NotFoundException(__('Repositório inválido'));
         }
         if ($this->request->is('post') || $this->request->is('put')) {
             if ($this->Repositorio->save($this->request->data)) {
-                $this->Session->setFlash(__('The repositorio has been saved.'));
+                $this->Session->setFlash(__('Registro salvo com sucesso.'), 'default', array('class' => 'notification success'));
                 return $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__('The repositorio could not be saved. Please, try again.'));
+                $this->Session->setFlash(__('Problemas ao salvar registro. Por favor, tente novamente.'));
             }
         } else {
             $options = array('conditions' => array('Repositorio.' . $this->Repositorio->primaryKey => $id));
@@ -89,13 +89,14 @@ class RepositoriosController extends AppController {
     public function delete($id = null) {
         $this->Repositorio->id = $id;
         if (!$this->Repositorio->exists()) {
-            throw new NotFoundException(__('Invalid repositorio'));
+            throw new NotFoundException(__('Repositório inválido'));
         }
         $this->request->onlyAllow('post', 'delete');
         if ($this->Repositorio->delete()) {
-            $this->Session->setFlash(__('The repositorio has been deleted.'));
+            $this->Session->setFlash(__('Registro deletado com sucesso.'), 'default', array('class' => 'notification success'));
         } else {
-            $this->Session->setFlash(__('The repositorio could not be deleted. Please, try again.'));
+            $this->Session->setFlash(__('Problemas ao deletar registro. Por favor, tente novamente.'));
         }
         return $this->redirect(array('action' => 'index'));
-    }}
+    }
+}

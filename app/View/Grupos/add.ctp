@@ -1,7 +1,7 @@
 <div class="grupos form">
 <?php echo $this->Form->create('Grupo'); ?>
 	<fieldset>
-		<legend><?php echo __('Add Grupo'); ?></legend>
+		<legend><?php echo __('Adicionar Grupo'); ?></legend>
 	<?php
 		echo $this->Form->input('nome');
 	?>

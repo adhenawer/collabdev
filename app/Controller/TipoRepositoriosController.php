@@ -26,7 +26,7 @@ class TipoRepositoriosController extends AppController {
  */
     public function view($id = null) {
         if (!$this->TipoRepositorio->exists($id)) {
-            throw new NotFoundException(__('Invalid tipo repositorio'));
+            throw new NotFoundException(__('Tipo de repositorio inválido'));
         }
         $options = array('conditions' => array('TipoRepositorio.' . $this->TipoRepositorio->primaryKey => $id));
         $this->set('tipoRepositorio', $this->TipoRepositorio->find('first', $options));
@@ -41,10 +41,10 @@ class TipoRepositoriosController extends AppController {
         if ($this->request->is('post')) {
             $this->TipoRepositorio->create();
             if ($this->TipoRepositorio->save($this->request->data)) {
-                $this->Session->setFlash(__('The tipo repositorio has been saved.'));
+                $this->Session->setFlash(__('Registro salvo com sucesso.'), 'default', array('class' => 'notification success'));
                 return $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__('The tipo repositorio could not be saved. Please, try again.'));
+                $this->Session->setFlash(__('Problemas ao salvar registro. Por favor, tente novamente.'));
             }
         }
     }
@@ -58,14 +58,14 @@ class TipoRepositoriosController extends AppController {
  */
     public function edit($id = null) {
         if (!$this->TipoRepositorio->exists($id)) {
-            throw new NotFoundException(__('Invalid tipo repositorio'));
+            throw new NotFoundException(__('Tipo de repositorio inválido'));
         }
         if ($this->request->is('post') || $this->request->is('put')) {
             if ($this->TipoRepositorio->save($this->request->data)) {
-                $this->Session->setFlash(__('The tipo repositorio has been saved.'));
+                $this->Session->setFlash(__('Registro salvo com sucesso.'), 'default', array('class' => 'notification success'));
                 return $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__('The tipo repositorio could not be saved. Please, try again.'));
+                $this->Session->setFlash(__('Problemas ao salvar registro. Por favor, tente novamente.'));
             }
         } else {
             $options = array('conditions' => array('TipoRepositorio.' . $this->TipoRepositorio->primaryKey => $id));
@@ -83,13 +83,14 @@ class TipoRepositoriosController extends AppController {
     public function delete($id = null) {
         $this->TipoRepositorio->id = $id;
         if (!$this->TipoRepositorio->exists()) {
-            throw new NotFoundException(__('Invalid tipo repositorio'));
+            throw new NotFoundException(__('Tipo de repositorio inválido'));
         }
         $this->request->onlyAllow('post', 'delete');
         if ($this->TipoRepositorio->delete()) {
-            $this->Session->setFlash(__('The tipo repositorio has been deleted.'));
+            $this->Session->setFlash(__('Registro deletado com sucesso.'), 'default', array('class' => 'notification success'));
         } else {
-            $this->Session->setFlash(__('The tipo repositorio could not be deleted. Please, try again.'));
+            $this->Session->setFlash(__('Problemas ao deletar registro. Por favor, tente novamente.'));
         }
         return $this->redirect(array('action' => 'index'));
-    }}
+    }
+}

@@ -27,7 +27,7 @@ class EquipesController extends AppController {
  */
     public function view($id = null) {
         if (!$this->Equipe->exists($id)) {
-            throw new NotFoundException(__('Invalid equipe'));
+            throw new NotFoundException(__('Equipe inválida'));
         }
         $options = array('conditions' => array('Equipe.' . $this->Equipe->primaryKey => $id));
         $this->set('equipe', $this->Equipe->find('first', $options));
@@ -42,10 +42,10 @@ class EquipesController extends AppController {
         if ($this->request->is('post')) {
             $this->Equipe->create();
             if ($this->Equipe->save($this->request->data)) {
-                $this->Session->setFlash(__('The equipe has been saved.'));
+                $this->Session->setFlash(__('Registro salvo com sucesso.'), 'default', array('class' => 'notification success'));
                 return $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__('The equipe could not be saved. Please, try again.'));
+                $this->Session->setFlash(__('Problemas ao salvar registro. Por favor, tente novamente.'));
             }
         }
     }
@@ -59,14 +59,14 @@ class EquipesController extends AppController {
  */
     public function edit($id = null) {
         if (!$this->Equipe->exists($id)) {
-            throw new NotFoundException(__('Invalid equipe'));
+            throw new NotFoundException(__('Equipe inválida'));
         }
         if ($this->request->is('post') || $this->request->is('put')) {
             if ($this->Equipe->save($this->request->data)) {
-                $this->Session->setFlash(__('The equipe has been saved.'));
+                $this->Session->setFlash(__('Registro salvo com sucesso.'), 'default', array('class' => 'notification success'));
                 return $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__('The equipe could not be saved. Please, try again.'));
+                $this->Session->setFlash(__('Problemas ao salvar registro. Por favor, tente novamente.'));
             }
         } else {
             $options = array('conditions' => array('Equipe.' . $this->Equipe->primaryKey => $id));
@@ -84,13 +84,14 @@ class EquipesController extends AppController {
     public function delete($id = null) {
         $this->Equipe->id = $id;
         if (!$this->Equipe->exists()) {
-            throw new NotFoundException(__('Invalid equipe'));
+            throw new NotFoundException(__('Equipe inválida'));
         }
         $this->request->onlyAllow('post', 'delete');
         if ($this->Equipe->delete()) {
-            $this->Session->setFlash(__('The equipe has been deleted.'));
+            $this->Session->setFlash(__('Registro deletado com sucesso.'), 'default', array('class' => 'notification success'));
         } else {
-            $this->Session->setFlash(__('The equipe could not be deleted. Please, try again.'));
+            $this->Session->setFlash(__('Problemas ao deletar registro. Por favor, tente novamente.'));
         }
         return $this->redirect(array('action' => 'index'));
-    }}
+    }
+}

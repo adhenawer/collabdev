@@ -26,7 +26,7 @@ class TarefasController extends AppController {
  */
     public function view($id = null) {
         if (!$this->Tarefa->exists($id)) {
-            throw new NotFoundException(__('Invalid tarefa'));
+            throw new NotFoundException(__('Tarefa inválida'));
         }
         $options = array('conditions' => array('Tarefa.' . $this->Tarefa->primaryKey => $id));
         $this->set('tarefa', $this->Tarefa->find('first', $options));
@@ -41,10 +41,10 @@ class TarefasController extends AppController {
         if ($this->request->is('post')) {
             $this->Tarefa->create();
             if ($this->Tarefa->save($this->request->data)) {
-                $this->Session->setFlash(__('The tarefa has been saved.'));
+                $this->Session->setFlash(__('Registro salvo com sucesso.'), 'default', array('class' => 'notification success'));
                 return $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__('The tarefa could not be saved. Please, try again.'));
+                $this->Session->setFlash(__('Problemas ao salvar registro. Por favor, tente novamente.'));
             }
         }
         $repositorios = $this->Tarefa->Repositorio->find('list');
@@ -62,14 +62,14 @@ class TarefasController extends AppController {
  */
     public function edit($id = null) {
         if (!$this->Tarefa->exists($id)) {
-            throw new NotFoundException(__('Invalid tarefa'));
+            throw new NotFoundException(__('Tarefa inválida'));
         }
         if ($this->request->is('post') || $this->request->is('put')) {
             if ($this->Tarefa->save($this->request->data)) {
-                $this->Session->setFlash(__('The tarefa has been saved.'));
+                $this->Session->setFlash(__('Registro salvo com sucesso.'), 'default', array('class' => 'notification success'));
                 return $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__('The tarefa could not be saved. Please, try again.'));
+                $this->Session->setFlash(__('Problemas ao salvar registro. Por favor, tente novamente.'));
             }
         } else {
             $options = array('conditions' => array('Tarefa.' . $this->Tarefa->primaryKey => $id));
@@ -91,13 +91,14 @@ class TarefasController extends AppController {
     public function delete($id = null) {
         $this->Tarefa->id = $id;
         if (!$this->Tarefa->exists()) {
-            throw new NotFoundException(__('Invalid tarefa'));
+            throw new NotFoundException(__('Tarefa inválida'));
         }
         $this->request->onlyAllow('post', 'delete');
         if ($this->Tarefa->delete()) {
-            $this->Session->setFlash(__('The tarefa has been deleted.'));
+            $this->Session->setFlash(__('Registro deletado com sucesso.'), 'default', array('class' => 'notification success'));
         } else {
-            $this->Session->setFlash(__('The tarefa could not be deleted. Please, try again.'));
+            $this->Session->setFlash(__('Problemas ao deletar registro. Por favor, tente novamente.'));
         }
         return $this->redirect(array('action' => 'index'));
-    }}
+    }
+}

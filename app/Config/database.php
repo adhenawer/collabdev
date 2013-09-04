@@ -60,7 +60,7 @@ class DATABASE_CONFIG {
 		'persistent' => false,
 		'host' => '127.0.0.1',
 		'login' => 'root',
-		'password' => 'root',
+		'password' => '',
 		'database' => 'collabdev',
 		'prefix' => '',
 		'encoding' => 'utf8',

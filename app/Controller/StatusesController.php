@@ -26,7 +26,7 @@ class StatusesController extends AppController {
  */
     public function view($id = null) {
         if (!$this->Status->exists($id)) {
-            throw new NotFoundException(__('Invalid status'));
+            throw new NotFoundException(__('Status inválido'));
         }
         $options = array('conditions' => array('Status.' . $this->Status->primaryKey => $id));
         $this->set('status', $this->Status->find('first', $options));
@@ -41,10 +41,10 @@ class StatusesController extends AppController {
         if ($this->request->is('post')) {
             $this->Status->create();
             if ($this->Status->save($this->request->data)) {
-                $this->Session->setFlash(__('The status has been saved.'));
+                $this->Session->setFlash(__('Registro salvo com sucesso.'), 'default', array('class' => 'notification success'));
                 return $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__('The status could not be saved. Please, try again.'));
+                $this->Session->setFlash(__('Problemas ao salvar registro. Por favor, tente novamente.'));
             }
         }
     }
@@ -58,14 +58,14 @@ class StatusesController extends AppController {
  */
     public function edit($id = null) {
         if (!$this->Status->exists($id)) {
-            throw new NotFoundException(__('Invalid status'));
+            throw new NotFoundException(__('Status inválido'));
         }
         if ($this->request->is('post') || $this->request->is('put')) {
             if ($this->Status->save($this->request->data)) {
-                $this->Session->setFlash(__('The status has been saved.'));
+                $this->Session->setFlash(__('Registro salvo com sucesso.'), 'default', array('class' => 'notification success'));
                 return $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__('The status could not be saved. Please, try again.'));
+                $this->Session->setFlash(__('Problemas ao salvar registro. Por favor, tente novamente.'));
             }
         } else {
             $options = array('conditions' => array('Status.' . $this->Status->primaryKey => $id));
@@ -83,13 +83,14 @@ class StatusesController extends AppController {
     public function delete($id = null) {
         $this->Status->id = $id;
         if (!$this->Status->exists()) {
-            throw new NotFoundException(__('Invalid status'));
+            throw new NotFoundException(__('Status inválido'));
         }
         $this->request->onlyAllow('post', 'delete');
         if ($this->Status->delete()) {
-            $this->Session->setFlash(__('The status has been deleted.'));
+            $this->Session->setFlash(__('Registro deletado com sucesso.'), 'default', array('class' => 'notification success'));
         } else {
-            $this->Session->setFlash(__('The status could not be deleted. Please, try again.'));
+            $this->Session->setFlash(__('Problemas ao deletar registro. Por favor, tente novamente.'));
         }
         return $this->redirect(array('action' => 'index'));
-    }}
+    }
+}
