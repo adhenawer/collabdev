@@ -40,6 +40,7 @@ class RepositoriosController extends AppController {
     public function add() {
         if ($this->request->is('post')) {
             $this->Repositorio->create();
+            $this->request->data['Repositorio']['usuario_id'] = $this->Session->read('Auth.User.id');
             if ($this->Repositorio->save($this->request->data)) {
                 $this->Session->setFlash(__('Registro salvo com sucesso.'), 'default', array('class' => 'notification success'));
                 return $this->redirect(array('action' => 'index'));
@@ -47,9 +48,8 @@ class RepositoriosController extends AppController {
                 $this->Session->setFlash(__('Problemas ao salvar registro. Por favor, tente novamente.'));
             }
         }
-        $usuarios = $this->Repositorio->Usuario->find('list');
         $tipoRepositorios = $this->Repositorio->TipoRepositorio->find('list');
-        $this->set(compact('usuarios', 'tipoRepositorios'));
+        $this->set(compact('tipoRepositorios'));
     }
 
 /**

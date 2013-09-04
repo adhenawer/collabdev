@@ -6,7 +6,6 @@
 		echo $this->Form->input('nome');
 		echo $this->Form->input('descricao');
 		echo $this->Form->input('linguagem');
-		echo $this->Form->input('usuario_id');
 		echo $this->Form->input('tipo_repositorio_id');
 	?>
 	</fieldset>

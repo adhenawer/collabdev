@@ -29,7 +29,7 @@ class EquipesController extends AppController {
         if (!$this->Equipe->exists($id)) {
             throw new NotFoundException(__('Equipe inválida'));
         }
-        $options = array('conditions' => array('Equipe.' . $this->Equipe->primaryKey => $id));
+        $options = array('conditions' => array('Equipe.' . $this->Equipe->primaryKey => $id), 'recursive' => -1);
         $this->set('equipe', $this->Equipe->find('first', $options));
     }
 

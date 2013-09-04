@@ -1,7 +1,7 @@
 <div class="tipoRepositorios form">
 <?php echo $this->Form->create('TipoRepositorio'); ?>
 	<fieldset>
-		<legend><?php echo __('Edit Tipo Repositorio'); ?></legend>
+		<legend><?php echo __('Editar Tipo Repositorio'); ?></legend>
 	<?php
 		echo $this->Form->input('id');
 		echo $this->Form->input('nome');

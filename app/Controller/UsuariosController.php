@@ -54,7 +54,7 @@ class UsuariosController extends AppController {
                 $this->Session->setFlash(__('Problemas ao salvar registro. Por favor, tente novamente.'));
             }
         }
-        $grupos = $this->Usuario->Grupo->find('list');
+        $grupos = $this->Usuario->Grupo->find('list', array('conditions' => array('Grupo.id >=' => $this->Session->read('Auth.User.Grupo.id'))));
         $this->set(compact('grupos'));
     }
 

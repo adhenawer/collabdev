@@ -28,7 +28,7 @@ class TipoRepositoriosController extends AppController {
         if (!$this->TipoRepositorio->exists($id)) {
             throw new NotFoundException(__('Tipo de repositorio inválido'));
         }
-        $options = array('conditions' => array('TipoRepositorio.' . $this->TipoRepositorio->primaryKey => $id));
+        $options = array('conditions' => array('TipoRepositorio.' . $this->TipoRepositorio->primaryKey => $id), 'recursive' => -1);
         $this->set('tipoRepositorio', $this->TipoRepositorio->find('first', $options));
     }
 

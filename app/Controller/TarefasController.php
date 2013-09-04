@@ -28,7 +28,7 @@ class TarefasController extends AppController {
         if (!$this->Tarefa->exists($id)) {
             throw new NotFoundException(__('Tarefa inválida'));
         }
-        $options = array('conditions' => array('Tarefa.' . $this->Tarefa->primaryKey => $id));
+        $options = array('conditions' => array('Tarefa.' . $this->Tarefa->primaryKey => $id), 'recursive' => 0);
         $this->set('tarefa', $this->Tarefa->find('first', $options));
     }
 
@@ -40,6 +40,7 @@ class TarefasController extends AppController {
     public function add() {
         if ($this->request->is('post')) {
             $this->Tarefa->create();
+            $this->request->data['Tarefa']['usuario_id'] = $this->Session->read('Auth.User.id');
             if ($this->Tarefa->save($this->request->data)) {
                 $this->Session->setFlash(__('Registro salvo com sucesso.'), 'default', array('class' => 'notification success'));
                 return $this->redirect(array('action' => 'index'));

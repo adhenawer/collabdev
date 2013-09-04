@@ -1,7 +1,7 @@
 <div class="statuses form">
 <?php echo $this->Form->create('Status'); ?>
 	<fieldset>
-		<legend><?php echo __('Edit Status'); ?></legend>
+		<legend><?php echo __('Editar Status'); ?></legend>
 	<?php
 		echo $this->Form->input('id');
 		echo $this->Form->input('nome');

@@ -28,7 +28,7 @@ class StatusesController extends AppController {
         if (!$this->Status->exists($id)) {
             throw new NotFoundException(__('Status inválido'));
         }
-        $options = array('conditions' => array('Status.' . $this->Status->primaryKey => $id));
+        $options = array('conditions' => array('Status.' . $this->Status->primaryKey => $id), 'recursive' => -1);
         $this->set('status', $this->Status->find('first', $options));
     }
 
