@@ -1,7 +1,7 @@
 Collabdev
 =========
 A proposta é desenvolver um gerenciador de controle de versão SVN/GIT para facilitar a configuração e manutenção de repositórios
-de equipes colaborativas que tenham que manter o código fonte em ambiente de infra-estrutura interna.
+de equipes colaborativas de desenvolvimento que tenham que manter o código fonte em ambiente de infra-estrutura interna.
 
 
 ##Ambiente
