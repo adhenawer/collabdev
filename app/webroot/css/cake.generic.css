@@ -752,3 +752,6 @@ pre {
 #url-rewriting-warning {
 	display:none;
 }
+.usuariosEquipe table{
+	width: 60%;
+}
