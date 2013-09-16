@@ -145,6 +145,6 @@ class UsuariosController extends AppController {
 
     public function beforeFilter(){
         parent::beforeFilter();
-        $this->Auth->allow('dashboard', 'conta', 'logout', 'alterarSenha');
+        $this->Auth->allow('logout');
     }
 }
