@@ -28,6 +28,9 @@ class AclController extends AppController {
         $this->Acl->allow($group, 'controllers/Usuarios/edit');
         $this->Acl->allow($group, 'controllers/Usuarios/view');
         $this->Acl->allow($group, 'controllers/Usuarios/delete');
+        $this->Acl->allow($group, 'controllers/Usuarios/dashboard');
+        $this->Acl->allow($group, 'controllers/Usuarios/conta');
+        $this->Acl->allow($group, 'controllers/Usuarios/alterarSenha');
 
         $this->Acl->allow($group, 'controllers/Repositorios/index');
         $this->Acl->allow($group, 'controllers/Repositorios/add');
@@ -40,6 +43,8 @@ class AclController extends AppController {
         $this->Acl->allow($group, 'controllers/Equipes/edit');
         $this->Acl->allow($group, 'controllers/Equipes/view');
         $this->Acl->allow($group, 'controllers/Equipes/delete');
+        $this->Acl->allow($group, 'controllers/Equipes/relacionarUsuario');
+        $this->Acl->allow($group, 'controllers/Equipes/removerUsuario');
 
         $this->Acl->allow($group, 'controllers/Tarefas/index');
         $this->Acl->allow($group, 'controllers/Tarefas/add');
@@ -50,13 +55,15 @@ class AclController extends AppController {
         //Colaborador
         $group->id = 3;
         $this->Acl->deny($group, 'controllers');
-        $this->Acl->allow($group, 'controllers/Usuarios/edit');
+        $this->Acl->allow($group, 'controllers/Usuarios/dashboard');
+        $this->Acl->allow($group, 'controllers/Usuarios/conta');
+        $this->Acl->allow($group, 'controllers/Usuarios/alterarSenha');
 
-        $this->Acl->allow($group, 'controllers/Tarefas/index');
-        //$this->Acl->allow($group, 'controllers/Tarefas/add');
-        //$this->Acl->allow($group, 'controllers/Tarefas/edit');
+        /*$this->Acl->allow($group, 'controllers/Tarefas/index');
+        $this->Acl->allow($group, 'controllers/Tarefas/add');
+        $this->Acl->allow($group, 'controllers/Tarefas/edit');
         $this->Acl->allow($group, 'controllers/Tarefas/view');
-        //$this->Acl->allow($group, 'controllers/Tarefas/delete');
+        $this->Acl->allow($group, 'controllers/Tarefas/delete');*/
 
         //we add an exit to avoid an ugly "missing views" error message
         echo "all done";
