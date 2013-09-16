@@ -21,11 +21,6 @@
             <?php echo h($usuario['Usuario']['login']); ?>
             &nbsp;
         </dd>
-        <dt><?php echo __('Senha'); ?></dt>
-        <dd>
-            <?php echo h($usuario['Usuario']['senha']); ?>
-            &nbsp;
-        </dd>
         <dt><?php echo __('Grupo'); ?></dt>
         <dd>
             <?php echo $this->Html->link($usuario['Grupo']['nome'], array('controller' => 'grupos', 'action' => 'view', $usuario['Grupo']['id'])); ?>
