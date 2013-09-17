@@ -45,6 +45,8 @@ class AclController extends AppController {
         $this->Acl->allow($group, 'controllers/Equipes/delete');
         $this->Acl->allow($group, 'controllers/Equipes/relacionarUsuario');
         $this->Acl->allow($group, 'controllers/Equipes/removerUsuario');
+        $this->Acl->allow($group, 'controllers/Equipes/relacionarRepositorio');
+        $this->Acl->allow($group, 'controllers/Equipes/removerRepositorio');
 
         $this->Acl->allow($group, 'controllers/Tarefas/index');
         $this->Acl->allow($group, 'controllers/Tarefas/add');
