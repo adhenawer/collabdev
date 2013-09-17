@@ -33,8 +33,17 @@ class EquipesController extends AppController {
         }
         $options = array('conditions' => array('Equipe.' . $this->Equipe->primaryKey => $id), 'recursive' => -1);
         $this->set('equipe', $this->Equipe->find('first', $options));
-        $this->set('usuarios', $this->Usuario->find('list'));
+
+        $usuarios = $this->Usuario->find('list');
+        array_unshift($usuarios, null);
+        $this->set('usuarios', $usuarios);
+
+        $repositorios = $this->Usuario->Repositorio->find('list');
+        array_unshift($repositorios, null);
+        $this->set('repositorios', $repositorios);
+
         $this->set('membros', $this->getMembrosEquipe($id));
+        $this->set('repositoriosEquipe', $this->getRepositoriosEquipe($id));
     }
 
 /**
@@ -47,6 +56,18 @@ class EquipesController extends AppController {
         $options['fields'] = array('Usuario.id', 'Usuario.login');
         $options['conditions'] = array('EquipeUsuario.equipe_id' => $equipeId);
         return $this->Equipe->EquipeUsuario->find('all', $options);
+    }
+
+/**
+ * getRepositoriosEquipe method
+ *
+ * @param string $equipeId
+ * @return array contendo dados dos repositórios
+ */
+    private function getRepositoriosEquipe($equipeId){
+        $options['fields'] = array('Repositorio.id', 'Repositorio.nome');
+        $options['conditions'] = array('EquipeRepositorio.equipe_id' => $equipeId);
+        return $this->Equipe->EquipeRepositorio->find('all', $options);
     }
 
 /**
@@ -153,6 +174,55 @@ class EquipesController extends AppController {
                 $this->Session->setFlash(__('Usuário removido da equipe com sucesso.'), 'default', array('class' => 'notification success'));
             } else {
                 $this->Session->setFlash(__('Problemas ao remover usuário. Por favor, tente novamente.'));
+            }
+        } else {
+            $this->Session->setFlash(__('Parâmetros inválidos. Por favor, tente novamente.'));
+        }
+        return $this->redirect($this->referer());
+    }
+
+/**
+ * relacionarRepositorio method
+ *
+ * @throws NotFoundException
+ * @param string $equipeId
+ * @return boolean
+ */
+    public function relacionarRepositorio($equipeId){
+        if (!$this->Equipe->exists($equipeId)) {
+            throw new NotFoundException(__('Equipe inválida'));
+        }
+        if ($this->request->is('post') || $this->request->is('put')) {
+            $data['EquipeRepositorio'] = array(
+                'equipe_id'  => $equipeId,
+                'repositorio_id' => $this->request->data['Equipe']['repositorio_id']
+            );
+            if ($this->Equipe->EquipeRepositorio->save($data)) {
+                $this->Session->setFlash(__('Repositório atrelado à equipe com sucesso.'), 'default', array('class' => 'notification success'));
+            } else {
+                $this->Session->setFlash(__('Problemas ao atrelar repositório. Por favor, tente novamente.'));
+            }
+        }
+        return $this->redirect($this->referer());
+    }
+
+/**
+ * removerRepositorio method
+ *
+ * @param string $equipeId
+ * @param string $repositorioId
+ * @return void
+ */
+    public function removerRepositorio($equipeId = null, $repositorioId = null){
+        if ($equipeId != null && $repositorioId != null) {
+            $conditions = array(
+                'EquipeRepositorio.equipe_id'  => $equipeId,
+                'EquipeRepositorio.repositorio_id' => $repositorioId
+            );
+            if ($this->Equipe->EquipeRepositorio->deleteAll($conditions)) {
+                $this->Session->setFlash(__('Repositório removido da equipe com sucesso.'), 'default', array('class' => 'notification success'));
+            } else {
+                $this->Session->setFlash(__('Problemas ao remover repositório. Por favor, tente novamente.'));
             }
         } else {
             $this->Session->setFlash(__('Parâmetros inválidos. Por favor, tente novamente.'));

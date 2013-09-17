@@ -48,6 +48,24 @@
             <?php endforeach;?>
         </table>
 </div>
+<div class="equipes index usuariosEquipe">
+    <h2><?php echo 'Repositórios da equipe' ?></h2>
+        <table cellpadding="0" cellspacing="0">
+            <tr>
+                <th>Repositório</th>
+                <th></th>
+            </tr>
+            <?php foreach ($repositoriosEquipe as $value): ?>
+            <tr>
+                <td><?php echo h($value['Repositorio']['nome']); ?>&nbsp;</td>
+            <td class="actions">
+                <?php echo $this->Html->link(__('Visualizar'), array('controller' => 'repositorios','action' => 'view', $value['Repositorio']['id'])); ?>
+                <?php echo $this->Html->link(__('Remover'), array('action' => 'removerRepositorio', $equipe['Equipe']['id'], $value['Repositorio']['id']), null, __('Tem certeza que deseja remover o repositório %s da equipe?', $value['Repositorio']['nome'])); ?>
+            </td>
+            </tr>
+            <?php endforeach;?>
+        </table>
+</div>
 <div class="equipes view form">
     <?php
         echo $this->Form->create(null, array(
@@ -57,9 +75,24 @@
                  $equipe['Equipe']['id']
         )));
     ?>
-    <h2><?php echo 'Adicionar usuário' ?></h2>
+    <h2><?php echo 'Adicionar membro' ?></h2>
     <?php
         echo $this->Form->input('usuario_id');
+        echo $this->Form->end(__('Submit'));
+    ?>
+</div>
+<div class="equipes view form">
+    <?php
+        echo $this->Form->create(null, array(
+            'url' => array(
+                'controller' => 'equipes',
+                'action' => 'relacionarRepositorio',
+                 $equipe['Equipe']['id']
+        )));
+    ?>
+    <h2><?php echo 'Adicionar repositório' ?></h2>
+    <?php
+        echo $this->Form->input('repositorio_id');
         echo $this->Form->end(__('Submit'));
     ?>
 </div>
