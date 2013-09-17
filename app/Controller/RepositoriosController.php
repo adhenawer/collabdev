@@ -123,6 +123,9 @@ class RepositoriosController extends AppController {
  */
     private function loadVersionador($versionador){
         $versionador = ucfirst(strtolower($versionador));
+        if (!class_exists($versionador)) {
+            throw new Exception(__('Classe "' . $versionador . '" inexistente!'));
+        }
         $this->versionador = new $versionador();
         $this->versionador->path = Configure::read('path.svn');
     }
