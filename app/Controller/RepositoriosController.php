@@ -1,11 +1,17 @@
 <?php
 App::uses('AppController', 'Controller');
+App::import('Vendor', 'php-version-control/autoload');
 /**
  * Repositorios Controller
  *
  * @property Repositorio $Repositorio
  */
 class RepositoriosController extends AppController {
+
+/**
+ * atributo armazena o versionador instânciado[svn|git]
+*/
+    private $versionador = null;
 
 /**
  * index method
@@ -42,6 +48,9 @@ class RepositoriosController extends AppController {
             $this->Repositorio->create();
             $this->request->data['Repositorio']['usuario_id'] = $this->Session->read('Auth.User.id');
             if ($this->Repositorio->save($this->request->data)) {
+                $repositorio = $this->Repositorio->findById($this->Repositorio->id);
+                $this->loadVersionador($repositorio['TipoRepositorio']['nome']);
+                $this->versionador->create($this->request->data['Repositorio']['nome']);
                 $this->Session->setFlash(__('Registro salvo com sucesso.'), 'default', array('class' => 'notification success'));
                 return $this->redirect(array('action' => 'index'));
             } else {
@@ -64,7 +73,10 @@ class RepositoriosController extends AppController {
             throw new NotFoundException(__('Repositório inválido'));
         }
         if ($this->request->is('post') || $this->request->is('put')) {
+            $repositorio = $this->Repositorio->findById($id);
             if ($this->Repositorio->save($this->request->data)) {
+                $this->loadVersionador($repositorio['TipoRepositorio']['nome']);
+                $this->versionador->rename($repositorio['Repositorio']['nome'], $this->request->data['Repositorio']['nome']);
                 $this->Session->setFlash(__('Registro salvo com sucesso.'), 'default', array('class' => 'notification success'));
                 return $this->redirect(array('action' => 'index'));
             } else {
@@ -88,15 +100,30 @@ class RepositoriosController extends AppController {
  */
     public function delete($id = null) {
         $this->Repositorio->id = $id;
+        $repositorio = $this->Repositorio->findById($id);
         if (!$this->Repositorio->exists()) {
             throw new NotFoundException(__('Repositório inválido'));
         }
         $this->request->onlyAllow('post', 'delete');
         if ($this->Repositorio->delete()) {
+            $this->loadVersionador($repositorio['TipoRepositorio']['nome']);
+            $this->versionador->delete($repositorio['Repositorio']['nome']);
             $this->Session->setFlash(__('Registro deletado com sucesso.'), 'default', array('class' => 'notification success'));
         } else {
             $this->Session->setFlash(__('Problemas ao deletar registro. Por favor, tente novamente.'));
         }
         return $this->redirect(array('action' => 'index'));
+    }
+
+/**
+ * loadVersionador method
+ *
+ * @param string $versionador ex: [svn|git]
+ * @return void
+ */
+    private function loadVersionador($versionador){
+        $versionador = ucfirst(strtolower($versionador));
+        $this->versionador = new $versionador();
+        $this->versionador->path = Configure::read('path.svn');
     }
 }
