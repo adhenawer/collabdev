@@ -1,5 +1,6 @@
 <?php
 App::uses('AppController', 'Controller');
+App::import('Vendor', 'php-version-control/autoload');
 /**
  * Usuarios Controller
  *
@@ -103,11 +104,17 @@ class UsuariosController extends AppController {
  */
     public function delete($id = null) {
         $this->Usuario->id = $id;
+        $this->Usuario->recursive = -1;
+        $usuario = $this->Usuario->findById($id);
         if (!$this->Usuario->exists()) {
             throw new NotFoundException(__('Usuário inválido'));
         }
         $this->request->onlyAllow('post', 'delete');
         if ($this->Usuario->delete()) {
+            $svn = new Svn();
+            $svn->path = Configure::read('path.svn');
+            $svn->pathAuthUsers = Configure::read('path.svn.auth-users');
+            $svn->deleteUser($usuario['Usuario']['login']);
             $this->Session->setFlash(__('Registro deletado com sucesso.'), 'default', array('class' => 'notification success'));
         } else {
             $this->Session->setFlash(__('Problemas ao deletar registro. Por favor, tente novamente.'));
