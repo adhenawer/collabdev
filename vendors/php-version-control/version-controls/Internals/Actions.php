@@ -30,7 +30,7 @@ interface Actions
     public function deleteUser($user);
 
     /**
-    * Delete user
+    * Change password user
     */
     public function changePassWd($user, $pass);
 }
