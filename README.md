@@ -17,6 +17,7 @@ de equipes colaborativas de desenvolvimento que tenham que manter o código font
 ##Configuração
 - Executar script SQL **/app/Config/Schema/collabdev.sql**
 - Configurar database **/app/Config/database.php**
+- Inserir o path do controle de versão no arquivo **/app/Config/paths.php**
 
 ***
 
