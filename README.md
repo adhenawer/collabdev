@@ -7,7 +7,7 @@ de equipes colaborativas de desenvolvimento que tenham que manter o código font
 ##Ambiente
 - Apache +[mod_rewrite](http://book.cakephp.org/2.0/en/installation/url-rewriting.html)
 - PHP 5.3.x
-- MySQL 
+- MySQL
 - PHPUnit
 - SVN
 - GIT
@@ -17,7 +17,7 @@ de equipes colaborativas de desenvolvimento que tenham que manter o código font
 ##Configuração
 - Executar script SQL **/app/Config/Schema/collabdev.sql**
 - Configurar database **/app/Config/database.php**
-- Inserir o path do controle de versão no arquivo **/app/Config/paths.php**
+- Inserir o path do controle de versão no arquivo **/app/Config/config.php**
 
 ***
 
