@@ -25,4 +25,8 @@ class Git implements Actions
     public function deleteUser($user)
     {
     }
+
+    public function changePassWd($user, $pass)
+    {
+    }
 }

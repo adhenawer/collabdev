@@ -28,4 +28,9 @@ interface Actions
     * Delete user
     */
     public function deleteUser($user);
+
+    /**
+    * Delete user
+    */
+    public function changePassWd($user, $pass);
 }

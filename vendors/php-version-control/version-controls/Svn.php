@@ -37,6 +37,10 @@ class Svn implements Actions
         return $this->runCmd('htpasswd -D ' . $this->pathAuthUsers . '/svn-auth-users ' . $user .' 2>&1');
     }
 
+    public function changePassWd($user, $pass){
+        return $this->addUser($user, $pass);
+    }
+
     private function runCmd($command){
         if ($this->path == NULL || $this->pathAuthUsers == NULL) {
             throw new NotFoundException('Path is not defined!');
