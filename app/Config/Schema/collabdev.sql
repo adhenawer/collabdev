@@ -35,8 +35,8 @@ CREATE TABLE IF NOT EXISTS `collabdev`.`usuarios` (
   CONSTRAINT `fk_usuarios_grupos`
     FOREIGN KEY (`grupo_id`)
     REFERENCES `collabdev`.`grupos` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -70,13 +70,13 @@ CREATE TABLE IF NOT EXISTS `collabdev`.`repositorios` (
   CONSTRAINT `fk_repositorios_usuarios1`
     FOREIGN KEY (`usuario_id`)
     REFERENCES `collabdev`.`usuarios` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_repositorios_tipo_repositorios1`
     FOREIGN KEY (`tipo_repositorio_id`)
     REFERENCES `collabdev`.`tipo_repositorios` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -124,18 +124,18 @@ CREATE TABLE IF NOT EXISTS `collabdev`.`tarefas` (
   CONSTRAINT `fk_tarefas_repositorios1`
     FOREIGN KEY (`repositorio_id`)
     REFERENCES `collabdev`.`repositorios` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_tarefas_status1`
     FOREIGN KEY (`status_id`)
     REFERENCES `collabdev`.`status` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_tarefas_usuarios1`
     FOREIGN KEY (`usuario_id`)
     REFERENCES `collabdev`.`usuarios` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -155,13 +155,13 @@ CREATE TABLE IF NOT EXISTS `collabdev`.`tarefa_comentarios` (
   CONSTRAINT `fk_tarefa_comentarios_tarefas1`
     FOREIGN KEY (`tarefa_id`)
     REFERENCES `collabdev`.`tarefas` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_tarefa_comentarios_usuarios1`
     FOREIGN KEY (`usuario_id`)
     REFERENCES `collabdev`.`usuarios` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
@@ -179,13 +179,13 @@ CREATE TABLE IF NOT EXISTS `collabdev`.`equipe_usuarios` (
   CONSTRAINT `fk_times_has_usuarios_times1`
     FOREIGN KEY (`equipe_id`)
     REFERENCES `collabdev`.`equipes` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_times_has_usuarios_usuarios1`
     FOREIGN KEY (`usuario_id`)
     REFERENCES `collabdev`.`usuarios` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -204,13 +204,13 @@ CREATE TABLE IF NOT EXISTS `collabdev`.`equipe_repositorios` (
   CONSTRAINT `fk_times_has_repositorios_times1`
     FOREIGN KEY (`equipe_id`)
     REFERENCES `collabdev`.`equipes` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_equipe_repositorios_repositorios1`
     FOREIGN KEY (`repositorio_id`)
     REFERENCES `collabdev`.`repositorios` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 CREATE TABLE acos (
