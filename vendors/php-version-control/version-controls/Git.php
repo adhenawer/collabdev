@@ -17,4 +17,12 @@ class Git implements Actions
     public function delete($repo)
     {
     }
+
+    public function addUser($user, $pass)
+    {
+    }
+
+    public function deleteUser($user)
+    {
+    }
 }

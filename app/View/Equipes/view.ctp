@@ -59,6 +59,7 @@
             <tr>
                 <td><?php echo h($value['Repositorio']['nome']); ?>&nbsp;</td>
             <td class="actions">
+                <?php echo $this->Html->link(__('Sincronizar'), array('controller' => 'repositorios','action' => 'sincronizar', $equipe['Equipe']['id'], $value['Repositorio']['id']), array('id' => 'sincronizar')); ?>
                 <?php echo $this->Html->link(__('Visualizar'), array('controller' => 'repositorios','action' => 'view', $value['Repositorio']['id'])); ?>
                 <?php echo $this->Html->link(__('Remover'), array('action' => 'removerRepositorio', $equipe['Equipe']['id'], $value['Repositorio']['id']), null, __('Tem certeza que deseja remover o repositório %s da equipe?', $value['Repositorio']['nome'])); ?>
             </td>
@@ -77,7 +78,7 @@
     ?>
     <h2><?php echo 'Adicionar membro' ?></h2>
     <?php
-        echo $this->Form->input('usuario_id');
+        echo $this->Form->select('usuario_id', array($usuarios));
         echo $this->Form->end(__('Submit'));
     ?>
 </div>
@@ -92,7 +93,7 @@
     ?>
     <h2><?php echo 'Adicionar repositório' ?></h2>
     <?php
-        echo $this->Form->input('repositorio_id');
+        echo $this->Form->select('repositorio_id', array($repositorios));
         echo $this->Form->end(__('Submit'));
     ?>
 </div>

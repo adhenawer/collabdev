@@ -1,0 +1,29 @@
+Habilitando url_rewrite apache para cakephp
+Editar arquivo, allowOverride all
+/etc/httpd/conf.d/1-centos.local.conf
+
+Mysql
+User: root
+senha: 1234
+
+Instalar subversion
+yum install -y subversion mod_dav_svn
+
+vim /etc/httpd/conf.d/subversion.conf
+<Location /svn>
+   DAV svn
+   SVNParentPath /home/svn/repo
+   AuthType Basic
+   AuthName "Subversion repositories"
+   AuthUserFile /etc/svn-auth-users
+   AuthzSVNAccessFile /etc/svn-access-control
+   Require valid-user
+</Location>
+
+Criar user default no svn para criação do arquivo 'svn-auth-users'
+htpasswd -cm /etc/svn-auth-users admin
+
+Permissão no arquivo /etc/svn-auth-users para escrita do gerenciador
+chmod 777 /etc/svn-auth-users
+
+Criar deiretório: /home/svn/repo. Ou path desejado...

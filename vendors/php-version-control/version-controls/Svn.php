@@ -2,9 +2,14 @@
 class Svn implements Actions
 {
     /**
-    * Repository path
+    * Repository path.
     */
     public $path = null;
+
+    /**
+    * Path svn-auth-users.
+    */
+    public $pathAuthUsers = null;
 
     public function create($repo)
     {
@@ -20,6 +25,16 @@ class Svn implements Actions
     {
         shell_exec('chmod 777 -R ' . $this->path . '/' . $repo);
         return $this->runCmd('cd ' . $this->path .' ; rm -Rf ' . $repo);
+    }
+
+    public function addUser($user, $pass)
+    {
+        return $this->runCmd('cd /etc ; htpasswd -b ' . $this->pathAuthUsers . '/svn-auth-users ' . $user .' '. $pass . ' 2>&1');
+    }
+
+    public function deleteUser($user)
+    {
+        return $this->runCmd('cd /etc ; htpasswd -b ' . $this->pathAuthUsers . '/svn-auth-users ' . $user .' 2>&1');
     }
 
     private function runCmd($command){

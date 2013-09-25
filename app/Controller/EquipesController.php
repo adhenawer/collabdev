@@ -10,6 +10,8 @@ class EquipesController extends AppController {
 
     public $uses = array('Equipe','Usuario');
 
+    public $components = array('Svn');
+
 /**
  * index method
  *
@@ -34,12 +36,10 @@ class EquipesController extends AppController {
         $options = array('conditions' => array('Equipe.' . $this->Equipe->primaryKey => $id), 'recursive' => -1);
         $this->set('equipe', $this->Equipe->find('first', $options));
 
-        $usuarios = $this->Usuario->find('list');
-        array_unshift($usuarios, null);
+        $usuarios = $this->Usuario->find('list', array('fields' => array('Usuario.id', 'Usuario.login')));
         $this->set('usuarios', $usuarios);
 
-        $repositorios = $this->Usuario->Repositorio->find('list');
-        array_unshift($repositorios, null);
+        $repositorios = $this->Usuario->Repositorio->find('list', array('fields' => array('Repositorio.id', 'Repositorio.nome')));
         $this->set('repositorios', $repositorios);
 
         $this->set('membros', $this->getMembrosEquipe($id));
@@ -220,6 +220,9 @@ class EquipesController extends AppController {
                 'EquipeRepositorio.repositorio_id' => $repositorioId
             );
             if ($this->Equipe->EquipeRepositorio->deleteAll($conditions)) {
+                $equipe['Equipe']['id']    = $equipeId;
+                $repo['Repositorio']['id'] = $repositorioId;
+                $this->Svn->svnAcl(array(), $equipe, $repo);
                 $this->Session->setFlash(__('Repositório removido da equipe com sucesso.'), 'default', array('class' => 'notification success'));
             } else {
                 $this->Session->setFlash(__('Problemas ao remover repositório. Por favor, tente novamente.'));

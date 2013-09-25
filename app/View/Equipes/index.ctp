@@ -17,7 +17,7 @@
         <td><?php echo h($equipe['Equipe']['nome']); ?>&nbsp;</td>
         <td><?php echo h($equipe['Equipe']['created']); ?>&nbsp;</td>
         <td class="actions">
-            <?php echo $this->Html->link(__('Visualizar'), array('action' => 'view', $equipe['Equipe']['id'])); ?>
+            <?php echo $this->Html->link(__('Funções'), array('action' => 'view', $equipe['Equipe']['id'])); ?>
             <?php echo $this->Html->link(__('Editar'), array('action' => 'edit', $equipe['Equipe']['id'])); ?>
             <?php echo $this->Form->postLink(__('Deletar'), array('action' => 'delete', $equipe['Equipe']['id']), null, __('Are you sure you want to delete # %s?', $equipe['Equipe']['id'])); ?>
         </td>

@@ -1,4 +1,7 @@
 <?php
+/**
+* Actions interact with subversion.
+*/
 interface Actions
 {
     /**
@@ -15,4 +18,14 @@ interface Actions
     * Delete repository
     */
     public function delete($repo);
+
+    /**
+    * Add user
+    */
+    public function addUser($user, $pass);
+
+    /**
+    * Delete user
+    */
+    public function deleteUser($user);
 }

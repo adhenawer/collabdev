@@ -8,6 +8,10 @@ App::import('Vendor', 'php-version-control/autoload');
  */
 class RepositoriosController extends AppController {
 
+    public $uses = array('Repositorio', 'EquipeUsuario');
+
+    public $components = array('Svn');
+
 /**
  * atributo armazena o versionador instânciado[svn|git]
 */
@@ -116,6 +120,49 @@ class RepositoriosController extends AppController {
     }
 
 /**
+ * sincronizar method, sincroniza os usuários da equipe com o controle de versão.
+ *
+ * @param string $repositorioId
+ * @param string $equipeId
+ * @return void
+ */
+    public function sincronizar($equipeId, $repositorioId){
+        $repositorio = $this->Repositorio->find('first', array('conditions' => array('Repositorio.id' => $repositorioId)));
+        $this->loadVersionador($repositorio['TipoRepositorio']['nome']);
+        $usuarios = $this->getUsuariosEquipe($equipeId);
+        if ($usuarios) {
+            foreach ($usuarios as $value) {
+                $this->versionador->addUser(strtolower($value), Configure::read('user.default.senha'));
+            }
+        }
+        $equipe = $this->EquipeUsuario->Equipe->find('first', array('conditions' => array('Equipe.id' => $equipeId)));
+        $this->Svn->svnAcl($usuarios, $equipe, $repositorio);
+        $this->Session->setFlash(__('Repositório sincronizado com sucesso.'), 'default', array('class' => 'notification success'));
+        return $this->redirect($this->referer());
+    }
+
+/**
+ * getUsuariosEquipe method
+ *
+ * @param string $equipeId
+ * @return array de usuarios
+ */
+    private function getUsuariosEquipe($equipeId){
+        $options['fields']      = array('Usuario.login');
+        $options['recursive']   = -1;
+        $options['conditions']  = array('EquipeUsuario.equipe_id' => $equipeId);
+        $options['joins'] = array(
+            array(
+                'table' => 'usuarios',
+                'alias' => 'Usuario',
+                'type' => 'inner',
+                'conditions' => array('EquipeUsuario.usuario_id = Usuario.id')
+            )
+        );
+        return $this->EquipeUsuario->find('list', $options);
+    }
+
+/**
  * loadVersionador method
  *
  * @param string $versionador ex: [svn|git]
@@ -126,7 +173,8 @@ class RepositoriosController extends AppController {
         if (!class_exists($versionador)) {
             throw new Exception(__('Classe "' . $versionador . '" inexistente!'));
         }
-        $this->versionador = new $versionador();
-        $this->versionador->path = Configure::read('path.svn');
+        $this->versionador                = new $versionador();
+        $this->versionador->path          = Configure::read('path.svn');
+        $this->versionador->pathAuthUsers = Configure::read('path.svn.auth-users');
     }
 }
