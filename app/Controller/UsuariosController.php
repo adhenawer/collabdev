@@ -142,6 +142,14 @@ class UsuariosController extends AppController {
     public function alterarSenha(){
         if ($this->request->is('post')) {
             $this->Usuario->id = $this->Session->read('Auth.User.id');
+            $this->Usuario->recursive = -1;
+            $usuario = $this->Usuario->findById($this->Usuario->id);
+
+            $svn = new Svn();
+            $svn->path = Configure::read('path.svn');
+            $svn->pathAuthUsers = Configure::read('path.svn.auth-users');
+            $svn->changePassWd($usuario['Usuario']['login'], $this->request->data['Usuario']['senha']);
+
             $this->request->data['Usuario']['id'] = $this->Usuario->id;
             if($this->Usuario->save($this->data)){
                 $this->Session->setFlash(__('Senha alterada com sucesso.'), 'default', array('class' => 'notification success'));
