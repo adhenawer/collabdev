@@ -29,16 +29,16 @@ class Svn implements Actions
 
     public function addUser($user, $pass)
     {
-        return $this->runCmd('cd /etc ; htpasswd -b ' . $this->pathAuthUsers . '/svn-auth-users ' . $user .' '. $pass . ' 2>&1');
+        return $this->runCmd('htpasswd -b ' . $this->pathAuthUsers . '/svn-auth-users ' . $user .' '. $pass . ' 2>&1');
     }
 
     public function deleteUser($user)
     {
-        return $this->runCmd('cd /etc ; htpasswd -b ' . $this->pathAuthUsers . '/svn-auth-users ' . $user .' 2>&1');
+        return $this->runCmd('htpasswd -D ' . $this->pathAuthUsers . '/svn-auth-users ' . $user .' 2>&1');
     }
 
     private function runCmd($command){
-        if ($this->path == NULL) {
+        if ($this->path == NULL || $this->pathAuthUsers == NULL) {
             throw new NotFoundException('Path is not defined!');
         }
         return shell_exec($command);
