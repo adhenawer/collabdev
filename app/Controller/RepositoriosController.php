@@ -174,7 +174,9 @@ class RepositoriosController extends AppController {
             throw new Exception(__('Classe "' . $versionador . '" inexistente!'));
         }
         $this->versionador                = new $versionador();
-        $this->versionador->path          = Configure::read('path.svn');
-        $this->versionador->pathAuthUsers = Configure::read('path.svn.auth-users');
+        $this->versionador->path          = Configure::read('path.' . strtolower($versionador) . '.repo');
+        if (isset($this->versionador->pathAuthUsers)) {
+            $this->versionador->pathAuthUsers = Configure::read('path.' . strtolower($versionador) . '.auth-users');
+        }
     }
 }
