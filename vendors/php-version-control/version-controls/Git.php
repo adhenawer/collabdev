@@ -8,7 +8,7 @@ class Git implements Actions
 
     public function create($repo)
     {
-        return $this->runCmd('cd '. $this->path . ' ; mkdir ' . $repo . '.git ; cd ' . $repo . '.git ; git init --bare');
+        return $this->runCmd('cd '. $this->path . ' ; mkdir ' . $repo . '.git ; cd ' . $repo . '.git ; git init --bare --shared');
     }
 
     public function rename($oldName, $newName)
